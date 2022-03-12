@@ -77,7 +77,7 @@ describe("Testing add()", function(){
         let before_commit = git.staging;
         let output_commit = git.commit("Added feature/git_add_asterisk");
 
-        // git.revert();
+        git.revert();
 
         let after_commit_revert = git.staging;
 
