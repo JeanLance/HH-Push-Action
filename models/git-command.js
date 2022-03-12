@@ -59,6 +59,10 @@ class GitCommand {
     //Command: git commit -m "<message>"
     commit(message){
         if(this.staging.length > 0){
+            // Create copy of last state local repo. JSON.stringify() is use to make a clone of the local repository
+            this.record_local_repository = JSON.stringify(this.local_repository);
+            this.record_staging = this.staging;
+
             this.local_repository.push({ "message": message, "files": this.staging });
             this.staging = [];
             return "Done committing to local repository.";
@@ -74,6 +78,12 @@ class GitCommand {
         else {
             return "Nothing to push. No committed file found.";
         }     
+    }
+
+    // Command: git revert
+    revert(){
+        this.local_repository = JSON.parse(this.record_local_repository);
+        this.staging = this.record_staging;
     }
 }
 

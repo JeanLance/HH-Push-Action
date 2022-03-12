@@ -63,4 +63,26 @@ describe("Testing add()", function(){
         expect(output_add).to.equal('Successfully added as index file/s.');
         expect(output_status).to.equal('You have 1 change/s.\n.github/workflows/actions.yml');
     });
+
+    it('Should success after add, commit, and then revert', function() {
+        let wd = new WorkingDirectory();
+        wd.addFile("index.html", "views", "<html>Hello</html>");
+        wd.addFile("actions.yml", ".github/workflows", "");
+
+        let git = new GitCommand(wd);
+        git.init();
+
+        let output_add = git.add("*");
+
+        let before_commit = git.staging;
+        let output_commit = git.commit("Added feature/git_add_asterisk");
+
+        git.revert();
+
+        let after_commit_revert = git.staging;
+
+        expect(output_add).to.equal('Successfully added as index file/s.');
+        expect(output_commit).to.equal('Done committing to local repository.');
+        expect(after_commit_revert).to.equal(before_commit);
+    });
 })
