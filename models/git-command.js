@@ -12,15 +12,16 @@ class GitCommand {
     //Command: git status
     status(){
         let status   = "";
-        let changes  = Object.keys(this.working_directory.new_changes).length;
+        let new_changes = this.working_directory.new_changes;
+        let changes  = Object.keys(new_changes).length;
 
         status += `You have ${changes} change/s.\n`;
 
         for (let i = 0; i < changes; i++) {
-            status += `${this.staging[i].location}/${this.staging[i].name}`;
+            status += Object.keys(new_changes)[i];
 
             // Move to next line when there's another changes
-            if (this.staging[i+1]) {
+            if (Object.keys(new_changes)[i+1]) {
                 status += '\n';
             }
         }
