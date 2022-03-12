@@ -12,11 +12,7 @@ class GitCommand {
     //Command: git status
     status(){
         let status   = "";
-        let changes  = 0;
-
-        if (! typeof this.staging[0] === "object") {
-            changes = this.staging.length;
-        }
+        let changes  = Object.keys(this.working_directory.new_changes).length;
 
         status += `You have ${changes} change/s.\n`;
 
