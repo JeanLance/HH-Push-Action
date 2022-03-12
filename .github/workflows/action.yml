@@ -2,7 +2,7 @@ name: Github Actions Example
 on:
   push:
     branches: 
-        - feature/git_revert
+        - feature/git_**
 jobs:
   build:
     name: Build for new feature(s)
