@@ -14,7 +14,7 @@ class GitCommand {
         let status   = "";
         let new_changes = this.working_directory.new_changes;
         let changes  = Object.keys(new_changes).length;
-        
+      
         status += `You have ${changes} change/s.\n`;
 
         for (let i = 0; i < changes; i++) {
