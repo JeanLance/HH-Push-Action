@@ -12,19 +12,16 @@ class GitCommand {
     //Command: git status
     status(){
         let status   = "";
-        let changes  = 0;
-
-        if (! typeof this.staging[0] === "object") {
-            changes = this.staging.length;
-        }
-
+        let new_changes = this.working_directory.new_changes;
+        let changes  = Object.keys(new_changes).length;
+        
         status += `You have ${changes} change/s.\n`;
 
         for (let i = 0; i < changes; i++) {
-            status += `${this.staging[i].location}/${this.staging[i].name}`;
+            status += Object.keys(new_changes)[i];
 
             // Move to next line when there's another changes
-            if (this.staging[i+1]) {
+            if (Object.keys(new_changes)[i+1]) {
                 status += '\n';
             }
         }
@@ -39,9 +36,15 @@ class GitCommand {
             this.staging.push(modified_files[path_file]);
             delete modified_files[path_file];
         }
-        else if(path_file == "."){
-            this.staging.push(modified_files);
-            this.working_directory.new_changes = {};
+        else if(path_file == "*"){
+            let file_list = Object.keys(modified_files);
+
+            for(let row=0; row < file_list.length; row++){
+                if(!file_list[row].startsWith(".")){
+                    this.staging.push(modified_files[file_list[row]]);
+                    delete this.working_directory.new_changes[file_list[row]]; 
+                }
+            }
         }
         else{
             return `Failed to add ${path_file}! File is not modified or missing.`;
