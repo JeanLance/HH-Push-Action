@@ -95,11 +95,11 @@ describe("Testing add()", function(){
         git.init();
 
         let output_add      = git.add("*");
-        // let output_commit   = git.commit("Added feature/git_push");
+        let output_commit   = git.commit("Added feature/git_push");
         let output_push     = git.push();
         
         expect(output_add).to.equal('Successfully added as index file/s.');
-        // expect(output_commit).to.equal('Done committing to local repository.');
+        expect(output_commit).to.equal('Done committing to local repository.');
         expect(output_push).to.equal('Done pushing to remote repository.');
     });
 })
